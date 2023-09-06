@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  username: aamir
+  password: aamir
+  pool: 5
+  port: 5432
+
+development:
+  <<: *default
+  database: blog_development
+
+test:
+  <<: *default
+  database: blog_test
+
+production:
+  url: <%= ENV['DATABASE_URL'] %> 
