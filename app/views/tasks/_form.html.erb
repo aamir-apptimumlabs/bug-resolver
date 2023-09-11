@@ -1,0 +1,27 @@
+<%= form_with model: [ @project, @project.tasks.build ] do |form| %>
+  <p>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+  <p>
+    <%= form.label :timeline %><br>
+    <%= form.text_area :timeline %>
+  </p>
+
+  <div>
+    <%= form.label :status %><br>
+    <%= form.select :status, ['new', 'started', 'completed'], selected: 'new' %>
+  </div>
+  <div>
+    <%= form.label :task_type %><br>
+    <%= form.select :task_type, ['feature', 'bug'], selected: 'feature' %>
+  </div>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

@@ -1,0 +1,21 @@
+ <p>
+   <strong>Created By:</strong>
+   <%= task.title %>
+ </p>
+
+ <p>
+   <strong>Description:</strong>
+   <%= task.description %>
+ </p>
+ <p>
+   <strong>Timeline:</strong>
+   <%= task.timeline %>
+ </p>
+
+ <p>
+    <%= link_to "Destroy Task", [task.project, task], data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure?"
+                } %>
+  </p>
+<% end %>
