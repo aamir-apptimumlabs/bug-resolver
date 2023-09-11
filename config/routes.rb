@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # get 'tasks/index'
-  # get 'users/index'
+  devise_for :users 
 
   root "projects#index"
 
   resources :projects do 
     resources :tasks
   end
-  resources :users
+  # resources :users
 end
