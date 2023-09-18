@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+    
     def index
       @projects = Project.all
     end
@@ -12,7 +13,8 @@ class ProjectsController < ApplicationController
     def create
       # binding.pry
       @project = Project.new(project_params)
-  
+      authorize @project
+      @project.manager_id = current_user.id
       if @project.save
         redirect_to @project
       else
