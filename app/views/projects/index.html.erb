@@ -3,28 +3,10 @@
 <ul>
   <% @projects.each do |project| %>
     <li>
-      <%= project.name %>
+      <%= link_to project.name, project %>
     </li>
   <% end %>
 </ul>
 
-<h3>New Project</h3>
-
-<%= form_with model: @project do |form| %>
-  <div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-  
-  </div>
-
-  <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %>
-   
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+<%= link_to "New Project", new_project_path %>
 

@@ -1,5 +1,4 @@
 class ProjectsController < ApplicationController
-    # before_action :create, :project_params
     def index
       @projects = Project.all
     end
