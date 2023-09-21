@@ -1,0 +1,42 @@
+<!-- app/views/dashboards/qa_dashboard.html.erb -->
+
+<h2>QA Dashboard</h2>
+<h3>Assigned Tasks:</h3>
+<ul>
+  <% @tasks.each do |task| %>
+    <li>
+      <strong>Task Title:</strong> <%= task.title %><br>
+      <strong>Task Description:</strong> <%= task.description %><br>
+      <strong>Task Timeline:</strong> <%= task.timeline %><br>
+      <strong>Task Status:</strong> <%= task.status %><br>
+      <strong>Task Type:</strong> <%= task.task_type %><br>
+      <strong>Assigned Project:</strong> <%= task.project.name %><br>
+      <strong>Created By:</strong> <%= task.user.name %><br>
+
+
+<%= form_for task, url: project_task_path(project_id: task.project_id, id: task.id), method: :put do |f| %>
+    <%= f.label :status, 'Task Status' %>
+    <%= f.select :status, options_for_select(['created_now', 'started', 'completed'], task.status), class: 'form-control' %>
+  </div>
+  <%= f.submit 'Update Task', class: 'btn btn-primary' %>
+<% end %>
+
+     
+      <% if task.developer_id.present? %>
+        <p><strong>Assigned Developer:</strong> <%= User.find(task.developer_id).name %></p>
+      <% else %>
+      <%= form_with url: update_task_url(task), method: :put do |form| %>
+          <%= hidden_field_tag 'task_id', task.id %>
+
+          <div class="form-group"> 
+            <%= label_tag 'Developers' %>
+            <% developers = @users.select { |user| user.role == 'developer' } %>
+            <%= select_tag 'task[developer_id]', options_from_collection_for_select(developers, 'id', 'name'), class: 'form-control' %>
+          </div>
+
+          <%= submit_tag 'Assign Developer', class: 'btn btn-primary' %>
+        <% end %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

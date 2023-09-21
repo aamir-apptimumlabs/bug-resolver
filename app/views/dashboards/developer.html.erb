@@ -1,0 +1,21 @@
+<!-- app/views/dashboards/developer_dashboard.html.erb -->
+
+<h2>Developer Dashboard</h2>
+
+<h3>Assigned Tasks:</h3>
+<ul>
+<%# <%debugger %>
+  <% @tasks.each do |task| %>
+    <% if task.developer_id.present? && task.developer_id != 0%>
+    <li>
+      <strong>Task Title:</strong> <%= task.title %><br>
+      <strong>Task Description:</strong> <%= task.description %><br>
+      <strong>Task Timeline:</strong> <%= task.timeline %><br>
+      <strong>Task Status:</strong> <%= task.status %><br>
+      <strong>Task Type:</strong> <%= task.task_type %><br>
+      <strong>Assigned Project:</strong> <%= task.project.name %><br>
+      <strong>Created By:</strong> <%= task.user.name %><br>
+    </li>
+    <%end%>
+  <% end %>
+</ul>

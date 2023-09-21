@@ -3,19 +3,17 @@
 
 <%# ---- %>
 <ul>
-  <%# edit %>
-  <li><%= link_to "Edit", edit_project_path(@project) %></li> 
-  <%# delete %>
-  <li><%= link_to "Destroy", project_path(@project), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  } %>
-  </li>
+  <% if current_user.role == 'manager' %>
+    <li><%= link_to "Edit", edit_project_path(@project) %></li> 
+    <li><%= link_to "Destroy", project_path(@project), data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        } %></li>
+  <% end %>
 </ul>
 
 <%# Tasks %>
 <%= render template: 'tasks/index', locals: { tasks: @project.tasks } %>
-
 
 <h2>Add a task:</h2>
 <%= render "tasks/form" %>

@@ -48,6 +48,8 @@ class ProjectsController < ApplicationController
         redirect_to project_path(@task.project), notice: "Task updated successfully"
       elsif params[:id]
         @project = Project.find(params[:id])
+        authorize @project
+
         # binding.pry
         # debugger
     
@@ -66,6 +68,7 @@ class ProjectsController < ApplicationController
     # delete
     def destroy
       @project = Project.find(params[:id])
+      authorize @project
       @project.destroy
   
       redirect_to root_path, status: :see_other
