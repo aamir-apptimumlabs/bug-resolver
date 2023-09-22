@@ -2,19 +2,19 @@ class TasksController < ApplicationController
   def index 
     @users = User.all
   end
+  
   def create
-    # binding.pry
     @project = Project.find(params[:project_id])
 
-    # # assign qa
-    # binding.pry
-    # qa_id = params[:qa_id] || []
-    # binding.pry
-    @task = @project.tasks.create(task_params)
-    redirect_to project_path(@project)
-
+    @task = @project.tasks.new(task_params)
+    if @task.save
+      if current_user.role == 'manager'
+        redirect_to project_path(@project)
+      elsif current_user.role == 'qa'
+       redirect_to qa_show_path(@project)
+      end
+    end
   end
-
     # update
     def edit
       @project = Project.find(params[:id])

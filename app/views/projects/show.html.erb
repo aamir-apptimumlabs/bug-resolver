@@ -12,6 +12,23 @@
   <% end %>
 </ul>
 
+<%# Assign to QA %>
+<%# <% if task.qa_id.present?  %>
+        <%# <p><strong>Assigned QA:</strong> <%= User.find(task.qa_id).name</p>  %>
+      <%# <% else  %>
+        <%= form_with model: [@project], method: :put do |form| %>
+          <%# <%= hidden_field_tag 'task_id', task.id  %>
+
+          <div class="form-group"> 
+            <%= label_tag 'QAs' %>
+            <%# <%binding.pry%> 
+           <%= select_tag 'project[assigned_to_qa][]', options_for_select(@users.where(role: 'qa').map { |user| [user.name, user.id] }, selected: @project.assigned_to_qa), multiple: true  %>
+          </div>
+
+          <%= submit_tag 'Assign To QA', class: 'btn btn-primary' %>
+        <%# <% end  %>
+<% end %>
+
 <%# Tasks %>
 <%= render template: 'tasks/index', locals: { tasks: @project.tasks } %>
 

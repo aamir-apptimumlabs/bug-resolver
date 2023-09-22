@@ -1,6 +1,8 @@
 <!-- app/views/projects/index.html.erb -->
 
+<% if current_user.role == 'manager' %>
 <h1 class="mt-4">Projects</h1>
+<% end %>
 
 <ul class="list-group">
   <% @projects.each do |project| %>
@@ -9,12 +11,12 @@
         <%= link_to project.name, project, class: 'btn btn-primary' %>
       </li>
     <% else %>
-      <div class="card mb-3">
-        <div class="card-body">
-          <h3 class="card-title"><%= project.name %></h3>
-          <p class="card-text"><%= project.description %></p>
-        </div>
-      </div>
+      <%# <div class="card mb-3"> %>
+        <%# <div class="card-body"> %>
+          <%# <h3 class="card-title"><%= project.name</h3>  %>
+          <%# <p class="card-text"><%= project.description</p>  %>
+        <%# </div> %>
+      <%# </div> %>
     <% end %>
   <% end %>
 </ul>

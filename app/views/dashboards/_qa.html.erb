@@ -1,9 +1,8 @@
-<!-- app/views/dashboards/qa_dashboard.html.erb -->
 
-<h2>QA Dashboard</h2>
 <h3>Assigned Tasks:</h3>
 <ul>
-  <% @tasks.each do |task| %>
+  <% @project.tasks.each do |task| %>
+  <%if task.qa_id == current_user.id %>
     <li>
       <strong>Task Title:</strong> <%= task.title %><br>
       <strong>Task Description:</strong> <%= task.description %><br>
@@ -38,5 +37,6 @@
         <% end %>
       <% end %>
     </li>
+  <% end %>
   <% end %>
 </ul>
