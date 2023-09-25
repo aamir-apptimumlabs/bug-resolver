@@ -9,6 +9,9 @@ class ProjectsController < ApplicationController
       @users = User.all
 
       @task = Task.new # Initialize a new task instance
+      unless @project.manager_id == current_user.id
+        redirect_to root_path, alert: "Access denied. You are not assigned to this project."
+      end
     end
     def new
       @project = Project.new
@@ -47,11 +50,16 @@ class ProjectsController < ApplicationController
     
         redirect_to project_path(@task.project), notice: "Task updated successfully"
       elsif params[:id]
-        @project = Project.find(params[:id])
-        # binding.pry
         # debugger
-    
-        if @project.update(project_params)
+        @project = Project.find(params[:id])
+        authorize @project
+
+        if params[:project][:assigned_to_qa].present?
+          qa_ids_as_integers = params[:project][:assigned_to_qa].map(&:to_i)
+          @project.assigned_to_qa += qa_ids_as_integers
+          @project.save!
+          redirect_to @project, notice: "Project Assigned Successfully"
+        elsif @project.update(project_params)
           # binding.pry
           redirect_to @project, notice: "Project updated successfully"
         else
@@ -66,6 +74,7 @@ class ProjectsController < ApplicationController
     # delete
     def destroy
       @project = Project.find(params[:id])
+      authorize @project
       @project.destroy
   
       redirect_to root_path, status: :see_other
@@ -74,7 +83,7 @@ class ProjectsController < ApplicationController
     private
       def project_params
         # strong params
-        params.require(:project).permit(:name, :description)
+        params.require(:project).permit(:name, :description, assigned_to_qa: [])
       end
   end
   

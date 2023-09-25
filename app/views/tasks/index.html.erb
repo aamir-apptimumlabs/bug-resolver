@@ -1,7 +1,5 @@
 <!-- app/views/projects/show.html.erb -->
 
-<%# <h1>Project: <%= @project.name</h1>  %>
-
 <h2>Tasks:</h2>
 <ul>
   <% @project.tasks.each do |task| %>
@@ -26,28 +24,25 @@
         <%= link_to "Destroy Task", [task.project, task], data: {
                       turbo_method: :delete,
                       turbo_confirm: "Are you sure?"
-                    } %>
+                    }, class: 'btn btn-danger' %>
       </p>
 
-<% if task.qa_id.present? %>
-  <p><strong>Assigned QA:</strong> <%= User.find(task.qa_id).name %></p>
-<% else %>
-  <%= form_with model: [@project], method: :put do |form| %>
-    <%= hidden_field_tag 'task_id', task.id %>
+      <% if task.qa_id.present? %>
+        <p><strong>Assigned QA:</strong> <%= User.find(task.qa_id).name %></p>
+      <% else %>
+        <%= form_with model: [@project], method: :put do |form| %>
+          <%= hidden_field_tag 'task_id', task.id %>
 
-    <div class="form-group"> 
-      <%= label_tag 'QAs' %>
-      <% qas = @users.select { |user| user.role == 'qa' } %>
-      <%= select_tag 'task[qa_id]', options_from_collection_for_select(qas, 'id', 'name') %>
-    </div>
+          <div class="form-group"> 
+            <%= label_tag 'QAs' %>
+            <%# <% qas = @users.select { |user| user.role == 'qa' } %>
+            <% qas = User.where(role: 'qa', id: Project.where(id: @project.id).pluck('unnest(assigned_to_qa)')) %>
+            <%= select_tag 'task[qa_id]', options_from_collection_for_select(qas, 'id', 'name'), class: 'form-control' %>
+          </div>
 
-    <%= submit_tag 'Assign QA', class: 'btn btn-primary' %>
-  <% end %>
-<% end %>
-
-
-
-
+          <%= submit_tag 'Assign QA', class: 'btn btn-primary' %>
+        <% end %>
+      <% end %>
     </li>
   <% end %>
 </ul>

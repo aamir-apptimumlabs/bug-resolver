@@ -1,12 +1,26 @@
-<h1>Projects</h1>
+<!-- app/views/projects/index.html.erb -->
 
-<ul>
+<% if current_user.role == 'manager' %>
+<h1 class="mt-4">Projects</h1>
+<% end %>
+
+<ul class="list-group">
   <% @projects.each do |project| %>
-    <li>
-      <%= link_to project.name, project %>
-    </li>
+    <% if current_user.role == 'manager' && current_user.id == project.manager_id %>
+      <li class="list-group-item">
+        <%= link_to project.name, project, class: 'btn btn-primary' %>
+      </li>
+    <% else %>
+      <%# <div class="card mb-3"> %>
+        <%# <div class="card-body"> %>
+          <%# <h3 class="card-title"><%= project.name</h3>  %>
+          <%# <p class="card-text"><%= project.description</p>  %>
+        <%# </div> %>
+      <%# </div> %>
+    <% end %>
   <% end %>
 </ul>
 
-<%= link_to "New Project", new_project_path %>
-
+<% if current_user.role == 'manager' %>
+  <%= link_to "New Project", new_project_path, class: 'btn btn-success mt-4' %>
+<% end %>
