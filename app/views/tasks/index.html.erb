@@ -1,21 +1,53 @@
- <p>
-   <strong>Created By:</strong>
-   <%= task.title %>
- </p>
+<!-- app/views/projects/show.html.erb -->
 
- <p>
-   <strong>Description:</strong>
-   <%= task.description %>
- </p>
- <p>
-   <strong>Timeline:</strong>
-   <%= task.timeline %>
- </p>
+<%# <h1>Project: <%= @project.name</h1>  %>
 
- <p>
-    <%= link_to "Destroy Task", [task.project, task], data: {
-                  turbo_method: :delete,
-                  turbo_confirm: "Are you sure?"
-                } %>
-  </p>
+<h2>Tasks:</h2>
+<ul>
+  <% @project.tasks.each do |task| %>
+    <li>
+      <p>
+        <strong>Created By:</strong> <%= task.user.name %>
+      </p>
+
+      <p>
+        <strong>Title:</strong> <%= task.title %>
+      </p>
+
+      <p>
+        <strong>Description:</strong> <%= task.description %>
+      </p>
+
+      <p>
+        <strong>Timeline:</strong> <%= task.timeline %>
+      </p>
+
+      <p>
+        <%= link_to "Destroy Task", [task.project, task], data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    } %>
+      </p>
+
+<% if task.qa_id.present? %>
+  <p><strong>Assigned QA:</strong> <%= User.find(task.qa_id).name %></p>
+<% else %>
+  <%= form_with model: [@project], method: :put do |form| %>
+    <%= hidden_field_tag 'task_id', task.id %>
+
+    <div class="form-group"> 
+      <%= label_tag 'QAs' %>
+      <% qas = @users.select { |user| user.role == 'qa' } %>
+      <%= select_tag 'task[qa_id]', options_from_collection_for_select(qas, 'id', 'name') %>
+    </div>
+
+    <%= submit_tag 'Assign QA', class: 'btn btn-primary' %>
+  <% end %>
 <% end %>
+
+
+
+
+    </li>
+  <% end %>
+</ul>

@@ -10,9 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_08_180845) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_19_070618) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "articles", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "status"
+    t.integer "page"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commenter"
+    t.text "body"
+    t.bigint "article_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "status"
+    t.index ["article_id"], name: "index_comments_on_article_id"
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string "name"
@@ -33,6 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_08_180845) do
     t.bigint "project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "qa_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
@@ -51,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_08_180845) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "articles"
   add_foreign_key "projects", "users", column: "manager_id"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "users"

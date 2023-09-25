@@ -11,4 +11,10 @@ class ProjectPolicy
       # binding.pry
       user.role == 'manager'
     end
+    def update?
+      user.role == 'manager'
+    end
+    def destroy?
+      user.role == 'manager'
+    end
 end

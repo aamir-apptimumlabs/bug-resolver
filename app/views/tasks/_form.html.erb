@@ -14,13 +14,14 @@
 
   <div>
     <%= form.label :status %><br>
-    <%= form.select :status, ['new', 'started', 'completed'], selected: 'new' %>
+    <%= form.select :status, ['created_now', 'started', 'completed'], selected: 'new' %>
   </div>
   <div>
     <%= form.label :task_type %><br>
     <%= form.select :task_type, ['feature', 'bug'], selected: 'feature' %>
   </div>
-
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <%= form.hidden_field :project_id, value: @project.id %>
   <p>
     <%= form.submit %>
   </p>
