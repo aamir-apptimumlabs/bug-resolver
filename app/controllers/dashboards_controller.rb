@@ -3,23 +3,33 @@ class DashboardsController < ApplicationController
   
     def qa_projects
       restrict_to_qa!
-      # debugger
-      # user = User.where(id: Project.pluck(:assigned_to_qa).flatten).ids
-      # @projects = Project.where(assigned_to_qa: current_user.id)
       @projects = Project.where("assigned_to_qa @> ARRAY[?]", [current_user.id])
-
     end
     
-    def qa_show
-      restrict_to_qa!
-      @users = User.all
-      @project = Project.find(params[:project_id])
-    end
-
     def qa
       restrict_to_qa!
       @users = User.all
       @tasks = Task.where(qa_id: current_user.id)
+    end
+
+    def qa_new
+      restrict_to_qa!
+      @project = Project.find(params[:project_id])
+      @task = Task.new
+    end
+
+    def qa_create
+      restrict_to_qa!
+    end
+
+    def qa_show
+      restrict_to_qa!
+      @users = User.all
+      @project = Project.find(params[:project_id])
+      # 
+      unless @project.assigned_to_qa.include?(current_user.id)
+        redirect_to root_path, alert: "Access denied. You are not assigned to this project."
+      end
     end
   
     def developer

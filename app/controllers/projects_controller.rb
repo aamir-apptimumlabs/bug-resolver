@@ -9,6 +9,9 @@ class ProjectsController < ApplicationController
       @users = User.all
 
       @task = Task.new # Initialize a new task instance
+      unless @project.manager_id == current_user.id
+        redirect_to root_path, alert: "Access denied. You are not assigned to this project."
+      end
     end
     def new
       @project = Project.new

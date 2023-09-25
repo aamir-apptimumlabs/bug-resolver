@@ -35,7 +35,8 @@
 
           <div class="form-group"> 
             <%= label_tag 'QAs' %>
-            <% qas = @users.select { |user| user.role == 'qa' } %>
+            <%# <% qas = @users.select { |user| user.role == 'qa' } %>
+            <% qas = User.where(role: 'qa', id: Project.where(id: @project.id).pluck('unnest(assigned_to_qa)')) %>
             <%= select_tag 'task[qa_id]', options_from_collection_for_select(qas, 'id', 'name'), class: 'form-control' %>
           </div>
 

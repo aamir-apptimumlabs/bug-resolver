@@ -2,16 +2,13 @@
 <p> <%= @project.description %> </p>
 
 <%# ---- %>
-<ul>
   <% if current_user.role == 'manager' %>
-    <li><%= link_to "Edit", edit_project_path(@project) %></li> 
-    <li><%= link_to "Destroy", project_path(@project), data: {
-          turbo_method: :delete,
-          turbo_confirm: "Are you sure?"
-        } %></li>
+        <div class="btn-group w-25">
+          <%= link_to "Edit", edit_project_path(@project), class:"btn btn-success mr-2" %>
+          <%= button_to "Delete Project", project_path(@project), method: :delete, class:"btn btn-danger" %>  
+         </div>
   <% end %>
-</ul>
-
+<br>
 <%# Assign to QA %>
 <%# <% if task.qa_id.present?  %>
         <%# <p><strong>Assigned QA:</strong> <%= User.find(task.qa_id).name</p>  %>
@@ -23,6 +20,7 @@
             <%= label_tag 'QAs' %>
             <%# <%binding.pry%> 
            <%= select_tag 'project[assigned_to_qa][]', options_for_select(@users.where(role: 'qa').map { |user| [user.name, user.id] }, selected: @project.assigned_to_qa), multiple: true  %>
+         
           </div>
 
           <%= submit_tag 'Assign To QA', class: 'btn btn-primary' %>
@@ -32,5 +30,6 @@
 <%# Tasks %>
 <%= render template: 'tasks/index', locals: { tasks: @project.tasks } %>
 
-<h2>Add a task:</h2>
-<%= render "tasks/form" %>
+<%# <h2>Add a task:</h2> %>
+<%# <%= render "tasks/form" %>
+<%= link_to "Add a Task", new_project_task_path(@project), class: "btn btn-primary" %>

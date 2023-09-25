@@ -1,5 +1,8 @@
 <div class="container">
-  <%= form_with model: [ @project, @project.tasks.build ], html: { class: 'form' } do |form| %>
+  <%= form_with model: [ @project, @task ], html: { class: 'form' } do |form| %>
+    <% @task.errors.full_messages.each do |message| %>
+        <div class="text-danger"><%= message %></div>
+    <% end %>
     <div class="form-group">
       <%= form.label :title %>
       <%= form.text_field :title, class: 'form-control' %>
@@ -7,11 +10,15 @@
     <div class="form-group">
       <%= form.label :description %>
       <%= form.text_area :description, class: 'form-control' %>
+       <%# <% @project.errors.full_messages_for(:description).each do |message| %>
+        <%# <div><%= message</div>  %>
+      <%# <% end  %>
     </div>
-    <div class="form-group">
-      <%= form.label :timeline %>
-      <%= form.text_area :timeline, class: 'form-control' %>
-    </div>
+<div class="form-group">
+  <%= form.label :timeline %>
+  <%= form.datetime_local_field :timeline, class: 'form-control' %>
+</div>
+
 
     <div class="form-group">
       <%= form.label :status %>
@@ -23,6 +30,9 @@
     </div>
     <%= form.hidden_field :user_id, value: current_user.id %>
     <%= form.hidden_field :project_id, value: @project.id %>
+    <%if current_user.role == 'qa'%>
+      <%= form.hidden_field :qa_id, value: current_user.id %>
+    <%end%>
     <div class="form-group">
       <%= form.submit 'Submit', class: 'btn btn-primary' %>
     </div>

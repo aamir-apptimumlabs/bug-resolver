@@ -16,6 +16,13 @@
       <strong>Assigned Project:</strong> <%= task.project.name %><br>
       <strong>Created By:</strong> <%= task.user.name %><br>
     </li>
+    
+    <%= form_for task, url: project_task_path(project_id: task.project_id, id: task.id), method: :put do |f| %>
+    <%= f.label :status, 'Task Status' %>
+    <%= f.select :status, options_for_select(['created_now', 'started', 'completed'], task.status), class: 'form-control' %>
+  </div>
+  <%= f.submit 'Update Task', class: 'btn btn-primary' %>
+<% end %>
     <%end%>
   <% end %>
 </ul>

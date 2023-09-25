@@ -6,7 +6,7 @@
 
 <ul class="list-group">
   <% @projects.each do |project| %>
-    <% if current_user.role == 'manager' %>
+    <% if current_user.role == 'manager' && current_user.id == project.manager_id %>
       <li class="list-group-item">
         <%= link_to project.name, project, class: 'btn btn-primary' %>
       </li>
