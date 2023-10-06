@@ -1,35 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-        <%if current_user.present? %>
-          <%if current_user.role == 'qa'%>
-          <a class="navbar-brand" href="/qa_dashboard">Bug Resolver</a>
-          <% elsif current_user.role == 'developer' %>
-          <a class="navbar-brand" href="/developer_dashboard">Bug Resolver</a>
-          <% elsif current_user.role == 'manager' %>
-          <a class="navbar-brand" href="/">Bug Resolver</a>
-          <%end%>
-        <%else%>
-        <a class="navbar-brand" href="/">Bug Resolver</a>
-        <%end%>
+  <a class="navbar-brand" href="/">Bug Resolver</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <%if current_user.present? %>
-        <%if current_user.role == "qa"%>
-        <a class="nav-link" href="/qa_dashboard">Home</a>
-        <% elsif current_user.role == 'developer' %>
-        <a class="nav-link" href="/developer_dashboard">Home</a>
-        <% elsif current_user.role == 'manager' %>
         <a class="nav-link" href="/">Home</a>
-        <%end%>
-        <%else%>
-        <a class="nav-link" href="/">Home</a>
-        <%end%>
-
       </li>
       <% if current_user.present? %>
         <li class="nav-item dropdown">

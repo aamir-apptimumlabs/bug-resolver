@@ -1,0 +1,26 @@
+<h3>Tasks:</h3>
+  <ul class="list-group">
+    <% @project.tasks.each do |task| %>
+      <li class="list-group-item">
+   
+    <%= render partial: "tasks/taskInfo", locals: { task: task }%>
+
+
+        <% if task.developer_id.present? && task.developer_id != 0 && task.timeline > Time.now %>
+          <%= form_for task, url: project_task_path(project_id: task.project_id, id: task.id), method: :put, class: 'mt-3' do |f| %>
+            <% if task.status != 'completed' %>
+              <%= f.label :status, 'Task Status' %>
+              <% if task.status == 'created_now' %>
+                <%= f.select :status, options_for_select([['created_now', 'created_now', { disabled: true }], ['started', 'started'], ['completed', 'completed']], task.status), class: 'form-control' %>
+                <%= f.submit 'Update Task', class: 'btn btn-primary' %>
+              <% elsif task.status == 'started' %>
+                <%= f.select :status, options_for_select([['created_now', 'created_now', { disabled: true }], ['started', 'started', { disabled: true }], ['completed', 'completed']], task.status), class: 'form-control' %>
+                <%= f.submit 'Update Task', class: 'btn btn-primary' %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>

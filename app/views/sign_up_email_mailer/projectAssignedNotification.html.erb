@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Project Assignment Notification</title>
+</head>
+<body>
+  <h1>Project Assignment Notification</h1>
+  <p>Hello <%= @user.name %>!</p>
+  <p>You have been assigned to the project "<%= @project.name %>" as a <%= @user.role %> team member.</p>
+  <p>Here are some details about the project:</p>
+  <ul>
+    <li>Project Name: <%= @project.name %></li>
+    <li>Description: <%= @project.description %></li>
+  </ul>
+  <p>If you have any questions or need further information about your tasks, please contact your project manager.</p>
+  <p>Best regards,</p>
+  <p>The <%= Rails.application.class.module_parent_name %> Team</p>
+</body>
+</html>

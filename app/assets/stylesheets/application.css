@@ -13,3 +13,21 @@
  *= require_tree .
  *= require_self
  */
+ /* body { */
+    /* background-image: url("bugsnax.jpg"); Replace with the actual image file name */
+    /* background-size: cover; Adjust as needed */
+    /* background-repeat: no-repeat; */
+    /* background-attachment: fixed; */
+    /* Additional background properties as needed */
+  /* } */
+  
+  .equal-width-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .equal-width-buttons .btn {
+    flex: 1;
+  }
+  

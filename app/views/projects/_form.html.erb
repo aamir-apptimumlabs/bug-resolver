@@ -1,19 +1,24 @@
-<%= form_with model: project do |form| %>
-  <div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-      <% project.errors.full_messages_for(:name).each do |message| %>
-        <div class="text-danger"><%= message %></div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <%= form_with model: project, local: true, html: { class: 'form' } do |form| %>
+        <div class="form-group">
+          <%= form.label :name %>
+          <%= form.text_field :name, class: 'form-control' %>
+          <% project.errors.full_messages_for(:name).each do |message| %>
+            <div class="text-danger"><%= message %></div>
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :description %>
+          <%= form.text_area :description, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.submit 'Submit', class: 'btn btn-primary' %>
+        </div>
       <% end %>
+    </div>
   </div>
-
-  <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %>
-   
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
