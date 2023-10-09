@@ -16,4 +16,8 @@ test:
   database: blog_test
 
 production:
-  url: <%= ENV['DATABASE_URL'] %> 
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+  database: bug_resolver_production
+  username: bug_resolver
+  password: <%= ENV['MY_APP_RENDER_DATABASE_PASSWORD'] %>

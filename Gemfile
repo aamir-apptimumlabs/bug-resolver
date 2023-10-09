@@ -51,6 +51,7 @@ gem "pry"
 gem "rails-erd"
 gem 'devise'
 gem 'pundit'
+gem 'omniauth-google-oauth2'
 
 
 group :development, :test do
