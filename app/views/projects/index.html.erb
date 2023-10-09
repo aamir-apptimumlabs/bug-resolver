@@ -1,26 +1,19 @@
-<!-- app/views/projects/index.html.erb -->
+<div class="container-fluid">
+  <div class="row justify-content-center align-items-center vh-100 mt-4">
+    <div class="col-md-8">
+        <h1 class="text-center">Projects</h1>
 
-<% if current_user.role == 'manager' %>
-<h1 class="mt-4">Projects</h1>
-<% end %>
+      <ul class="list-group">
+        <% @projects.each do |project| %>
+            <li class="list-group-item">
+              <%= link_to project.name, project, class: 'btn btn-primary' %>
+            </li>
+        <% end %>
+      </ul>
 
-<ul class="list-group">
-  <% @projects.each do |project| %>
-    <% if current_user.role == 'manager' && current_user.id == project.manager_id %>
-      <li class="list-group-item">
-        <%= link_to project.name, project, class: 'btn btn-primary' %>
-      </li>
-    <% else %>
-      <%# <div class="card mb-3"> %>
-        <%# <div class="card-body"> %>
-          <%# <h3 class="card-title"><%= project.name</h3>  %>
-          <%# <p class="card-text"><%= project.description</p>  %>
-        <%# </div> %>
-      <%# </div> %>
-    <% end %>
-  <% end %>
-</ul>
-
-<% if current_user.role == 'manager' %>
-  <%= link_to "New Project", new_project_path, class: 'btn btn-success mt-4' %>
-<% end %>
+      <% if current_user.role == 'manager' %>
+        <%= link_to "New Project", new_project_path, class: 'btn btn-success mt-4 d-block mx-auto' %>
+      <% end %>
+    </div>
+  </div>
+</div>

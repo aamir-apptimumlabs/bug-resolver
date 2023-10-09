@@ -1,0 +1,23 @@
+        <div class="text-right mb-3">
+          <div class="btn-group"> <!-- Buttons in the same line -->
+            <%= link_to "Edit", edit_project_path(@project), class: "btn btn-success mr-2" %>
+            <%= button_to "Delete Project", project_path(@project), method: :delete, class: "btn btn-danger" %>
+          </div>
+        </div>
+
+      <!-- Assign to QA -->
+      <%= form_with model: [@project], method: :put do |form| %>
+        <div class="form-group">
+          <strong><%= label_tag 'QAs' %></strong>
+          <%= select_tag 'project[assigned_to_qa][]', options_for_select(@qas.map { |user| [user.name, user.id] }, selected: @project.assigned_to_qa), multiple: true, class: 'form-control' %>
+        </div>
+      <!-- Assign to Developer -->
+        <div class="form-group">
+          <strong><%= label_tag 'Developers' %></strong>
+          <%= select_tag 'project[assigned_to_developer][]', options_for_select(@devs.map { |user| [user.name, user.id] }, selected: @project.assigned_to_developer), multiple: true, class: 'form-control' %>
+        </div>
+        <%= submit_tag 'Assign', class: 'btn btn-primary' %>
+      <% end %>
+
+      <!-- Tasks -->
+      <%= render template: 'tasks/index', locals: { tasks: @project.tasks } %>
