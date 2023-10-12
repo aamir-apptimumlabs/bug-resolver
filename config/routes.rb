@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-
+  devise_for :admin_users, ActiveAdmin::Devise.config
   devise_for :users, controllers: { passwords: 'users/passwords', sessions: 'users/sessions', registrations: 'signs' }
+
+  ActiveAdmin.routes(self)
+  put '/admin/dashboard/toggle_approval', to: 'admin/dashboard#toggle_approval', as: :admin_toggle_approval
 
   
   # custom raoutes for qas and developers

@@ -5,7 +5,10 @@ ruby "3.1.3"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.7", ">= 7.0.7.2"
+gem 'activeadmin', github: 'activeadmin/activeadmin', branch: 'master' # FIXME: revert to stable
 
+# Required for ActiveAdmin
+gem 'sass-rails'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
